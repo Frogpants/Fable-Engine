@@ -1,5 +1,5 @@
 
-package src.engine.core;
+package src.code.core;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
