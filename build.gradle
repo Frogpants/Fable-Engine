@@ -1,0 +1,49 @@
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.myengine'
+version = '1.0.0'
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+mainClassName = 'src.Main'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lwjglVersion = "3.3.2"
+    lwjglNatives = "natives-windows" // Change to your OS: windows, linux, macos
+}
+
+dependencies {
+    implementation "org.lwjgl:lwjgl:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-opengl:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-stb:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-openal:${lwjglVersion}"
+
+    runtimeOnly "org.lwjgl:lwjgl::${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-glfw::${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-opengl::${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-stb::${lwjglVersion}:${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-openal::${lwjglVersion}:${lwjglNatives}"
+}
+
+// Optional: create a fat/runnable jar with dependencies included
+jar {
+    manifest {
+        attributes(
+            'Main-Class': mainClassName
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
